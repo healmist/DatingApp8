@@ -1,0 +1,14 @@
+CREATE DATABASE datingapp;
+CREATE TABLE "PK__EFMigrationsHistory" (
+          "MigrationId" TEXT NOT NULL CONSTRAINT "PK___EFMigrationsHistory" PRIMARY KEY,
+          "ProductVersion" TEXT NOT NULL)
+
+uninstall list
+
+node
+
+nmp
+
+nmp angular cli
+
+
