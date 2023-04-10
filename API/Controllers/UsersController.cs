@@ -5,14 +5,14 @@ using System.Reflection.Metadata;
 using System.Threading.Tasks;
 using API.Data;
 using API.Entities;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace API.Controllers
 {
-    [ApiController]
-    [Route("API/[controller]")] //  API/users
-    public class UsersController
+    [Authorize]                                                 //allow to throw the err401 when no authorized, only to 'https'?
+    public class UsersController : BaseApiController
     {
         private readonly DataContext _context;                  //_context is the private prop indicator
 
@@ -21,6 +21,7 @@ namespace API.Controllers
             _context = context;                                 //_context (by convention ) instead of 'this.context'
         }
 
+        [AllowAnonymous]    //Authoriza will be ignore if below the context of this atribute
         [HttpGet]
         //search in the github the non Async version of this code
         public async Task<ActionResult<IEnumerable<AppUser>>> GetUsers()    //IEnumerable<AppUser> is what we're getting
