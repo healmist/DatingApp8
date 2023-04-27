@@ -13,7 +13,7 @@ export class AccountService {
   
   //behavior subject (observable-like) type '<User>' iitiated as 'null'
   private currentUserSource = new BehaviorSubject<User | null>(null); // '|'(alt+124) is the 'or' logic operator for TS
-  currrentUser$ = this.currentUserSource.asObservable();              //'$' is conventionally noted for an observable object
+  currentUser$ = this.currentUserSource.asObservable();              //'$' is conventionally noted for an observable object
   
   constructor(private http: HttpClient) { }
 
@@ -36,5 +36,16 @@ export class AccountService {
   logout() {
     localStorage.removeItem('user');
     this.currentUserSource.next(null);
+  }
+
+  register(model: any) {
+    return this.http.post<User>(this.baseUrl + 'account/register', model).pipe(    //and adds the observer
+      map(user =>{
+        if (user) {
+          localStorage.setItem('item', JSON.stringify(user));
+          this.currentUserSource.next(user)
+        }
+      })
+    )
   }
 }
