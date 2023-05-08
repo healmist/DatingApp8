@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
+using System.Linq;
 
 namespace API.Controllers
 {
@@ -36,7 +37,8 @@ namespace API.Controllers
                 PasswordSalt = hmac.Key                                             //random gend
             };   
 
-            _context.Users.Add(user);   //appending
+            //appending on Db table
+            _context.Users.Add(user);   
             await _context.SaveChangesAsync();
 
             return new UserDto  //return from defining our two new props
@@ -50,7 +52,7 @@ namespace API.Controllers
         public async Task<ActionResult<UserDto>> Login(LoginDto loginDto)
         {
 
-            var user = await _context.Users.SingleOrDefaultAsync(x => 
+            var user = await _context.Users.SingleOrDefaultAsync(x =>   //'x' will be a 'bool' from the '==' operator
                 x.UserName == loginDto.Username);
 
             if (user == null) return Unauthorized("invalid username");
@@ -63,8 +65,8 @@ namespace API.Controllers
                 if  (computedHash[i] != user.PasswordHash[i]) return Unauthorized("invalid password");
 
             }
+            return new UserDto
 
-            return new UserDto  
             {
                 Username = user.UserName,
                 Token = _tokenService.CreateToken(user)

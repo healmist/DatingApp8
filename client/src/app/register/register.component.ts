@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { AccountService } from '../_service/account.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-register',                               //app-register is child of app-home since its called from its html
@@ -11,7 +12,7 @@ export class RegisterComponent implements OnInit{
 
   model: any = {}
 
-  constructor(private accountService: AccountService) { }
+  constructor(private accountService: AccountService, private toastr: ToastrService) { }
   
   ngOnInit(): any {
   }
@@ -21,7 +22,7 @@ export class RegisterComponent implements OnInit{
       next: () => {
         this.cancel()
       },
-      error: (error: any) => console.log(error)              //from the teachers since the 'any' type had to be infered
+      error: error => this.toastr.error(error.error)              //'toastr' from constructor()
     })
   }
 

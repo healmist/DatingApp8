@@ -39,8 +39,8 @@ export class AccountService {
   }
 
   register(model: any) {
-    return this.http.post<User>(this.baseUrl + 'account/register', model).pipe(    //and adds the observer
-      map(user =>{
+    return this.http.post<User>(this.baseUrl + 'account/register', model).pipe(
+      map(user =>{                                                              //maps values to functions
         if (user) {
           localStorage.setItem('item', JSON.stringify(user));
           this.currentUserSource.next(user)
