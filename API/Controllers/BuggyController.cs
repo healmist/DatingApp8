@@ -38,7 +38,7 @@ namespace API.Controllers
                 return thing;
             }
 
-        [HttpGet("not-found")]
+        [HttpGet("server-error")]
         public ActionResult<string> GetServerError()
             {
                

@@ -34,7 +34,7 @@ namespace API.Controllers
             {
                 UserName = registerDto.Username.ToLower(),                                      //why colon?
                 PasswordHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(registerDto.Password)),  //'s' cant be null ->exception
-                PasswordSalt = hmac.Key                                             //random gend
+                PasswordSalt = hmac.Key                                                         //random gend
             };   
 
             //appending on Db table
